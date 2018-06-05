@@ -24,28 +24,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<form action="">
 		<table>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
+				<td><a href=""></a></td>
 			</tr>
 		</table>
 	</form>
