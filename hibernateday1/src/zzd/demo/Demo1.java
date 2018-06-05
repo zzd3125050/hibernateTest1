@@ -9,7 +9,6 @@ import org.junit.Test;
 
 
 import zzd.entity.User;
-import zzd.hibernate.HibernateSessionFactory;
 
 public class Demo1 {
 	@Test
