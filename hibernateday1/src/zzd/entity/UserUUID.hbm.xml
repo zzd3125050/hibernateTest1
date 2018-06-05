@@ -3,9 +3,9 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-	<class name="zzd.entity.User" table="user">
+	<class name="zzd.entity.UserUUID" table="t_user">
 		<id name="uid" column="uid">
-			<generator class="native"></generator>
+			<generator class="uuid"></generator>
 		</id>
 		
 		<property name="username" column="username"></property>
