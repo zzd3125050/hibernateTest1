@@ -5,6 +5,7 @@ public class User {
 	private String username;
 	private String password;
 	private String address;
+	
 	public User(int uid, String username, String password, String address) {
 		this.uid = uid;
 		this.username = username;

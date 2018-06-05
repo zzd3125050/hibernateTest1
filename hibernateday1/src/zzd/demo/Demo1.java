@@ -30,6 +30,9 @@ public class Demo1 {
 		
 		Transaction tx = session.beginTransaction();
 		session.save(user);
+		
+		
+		
 		tx.commit();
 		
 		session.close();
