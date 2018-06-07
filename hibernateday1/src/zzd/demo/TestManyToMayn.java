@@ -1,32 +1,31 @@
 package zzd.demo;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.junit.Test;
 
+import zzd.entity.Role;
 import zzd.entity.User;
 import zzd.hibernate.HibernateSessionFactory;
 
 /**
- * 查询测试
+ * 测试多对多方法
  * @author zzd
  *
- * 2018年6月6日
+ * 2018年6月7日
  *
  */
-public class Demo4Query {
+public class TestManyToMayn {
 	/**
-	 * Query方法测试
-	 * 2018年6月6日
+	 * 测试多对多级联保存
+	 * 2018年6月7日
 	 */
 	@Test
-	public void fun1(){
+	public void testAdd(){
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
@@ -35,14 +34,36 @@ public class Demo4Query {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Query query = session.createQuery("from User");
+			User user1 = new User();
+			user1.setUsername("龙可减肥");
+			user1.setPassword("lkjlkf");
+			user1.setAddress("北京");
 			
-			@SuppressWarnings("unchecked")
-			List<User> users = query.list();
+			User user2 = new User();
+			user2.setUsername("额老娘");
+			user2.setPassword("kjoen");
+			user2.setAddress("伤害");
 			
-			for (User user : users) {
-				System.out.println(user);
-			}
+			Role role1 = new Role();
+			role1.setR_name("经理");
+			role1.setR_memo("kj林");
+			
+			Role role2 = new Role();
+			role2.setR_name("扫地");
+			role2.setR_memo("扫大街");
+			
+			Role role3 = new Role();
+			role3.setR_name("打杂");
+			role3.setR_memo("端茶倒水");
+			
+			user1.getRoles().add(role1);
+			user1.getRoles().add(role2);
+			
+			user2.getRoles().add(role2);
+			user2.getRoles().add(role3);
+			
+			session.saveOrUpdate(user1);
+			session.saveOrUpdate(user2);
 			
 			tx.commit();
 		}catch (Exception e) {
@@ -55,11 +76,11 @@ public class Demo4Query {
 	}
 	
 	/**
-	 * Criteria测试
-	 * 2018年6月6日
+	 * 维护第三张表，为用户添加角色
+	 * 2018年6月7日
 	 */
 	@Test
-	public void fun2(){
+	public void testAddRole(){
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
@@ -68,14 +89,9 @@ public class Demo4Query {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Criteria criteria = session.createCriteria(User.class);
-			
-			@SuppressWarnings("unchecked")
-			List<User> users = criteria.list();
-			
-			for (User user : users) {
-				System.out.println(user);
-			}
+			User user = session.get(User.class, 2);
+			Role role = session.get(Role.class, 2);
+			user.getRoles().add(role);
 			
 			tx.commit();
 		}catch (Exception e) {
@@ -88,12 +104,11 @@ public class Demo4Query {
 	}
 	
 	/**
-	 * SQLQuery测试
-	 * 2018年6月6日
+	 * 维护第三张表，为用户删除角色
+	 * 2018年6月7日
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
-	public void fun3(){
+	public void testDeleteRole(){
 		SessionFactory sessionFactory = null;
 		Session session = null;
 		Transaction tx = null;
@@ -102,22 +117,9 @@ public class Demo4Query {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			SQLQuery sqlQuery = session.createSQLQuery("select * from user");
-					
-//			List<Object[]> users = sqlQuery.list();
-//			
-//			for (Object[] objects : users) {
-//				System.out.println(Arrays.toString(objects));
-//			}
-			
-//			设置返回对象形式
-			sqlQuery.addEntity(User.class);
-			
-			List<User> Users = sqlQuery.list();
-			
-			for (User user : Users) {
-				System.out.println(user);
-			}
+			User user = session.get(User.class, 2);
+			Role role = session.get(Role.class, 2);
+			user.getRoles().remove(role);
 			
 			tx.commit();
 		}catch (Exception e) {

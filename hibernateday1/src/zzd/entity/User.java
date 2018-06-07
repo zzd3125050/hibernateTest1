@@ -1,19 +1,20 @@
 package zzd.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
 	private int uid;
 	private String username;
 	private String password;
 	private String address;
+	private Set<Role> roles = new HashSet<Role>();
 	
-	public User(int uid, String username, String password, String address) {
-		this.uid = uid;
-		this.username = username;
-		this.password = password;
-		this.address = address;
+	public Set<Role> getRoles() {
+		return roles;
 	}
-	public User() {
-		super();
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	public int getUid() {
 		return uid;

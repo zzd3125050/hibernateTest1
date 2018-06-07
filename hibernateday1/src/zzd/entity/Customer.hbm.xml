@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="zzd.entity.Customer" table="customer">
+		<id name="cid" column="cid">
+			<generator class="native"></generator>
+		</id>
+		<property name="cName" column="cName"></property>
+		<property name="cLevel" column="cLevel"></property>
+		<property name="cSource" column="cSource"></property>
+		<property name="cPhone" column="cPhone"></property>
+		
+		
+		<!-- 使用set标签表示所有联系人
+			set标签中name属性值写customer实体类中表示联系人的set集合名称 
+			cascade属性值表示级联保存、更新，可添加delete属性表示级联删除在后边加",delete"
+			inverse属性表示是否放弃关系维护，一对多中一般放弃“一”的关系维护，即外键维护
+		-->
+		<set name="setLinkMan" cascade="save-update,delete" inverse="true">
+			<!-- 一对多建表，有外键 -->
+			<key column="clid"></key>
+			<!-- 客户所有的联系人，class里面写联系人实体类全路径 -->
+			<one-to-many class="zzd.entity.LinkMan"/>
+		</set>
+		
+	</class>
+	
+</hibernate-mapping>

@@ -75,8 +75,6 @@ public class Demo3Update {
 	public void fun4(){
 		Session session = null;
 		Session session1 = null;
-		Thread t1 = null;
-		Thread t2 = null;
 		
 		
 		session = HibernateSessionFactory.getSession();

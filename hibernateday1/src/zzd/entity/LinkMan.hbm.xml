@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="zzd.entity.LinkMan" table="linkMan">
+		<id name="lid" column="lid">
+			<generator class="native"></generator>
+		</id>
+	
+		<property name="lName" column="lName"></property>
+		<property name="lGender" column="lGender"></property>
+		<property name="lPhone" column="lPhone"></property>
+		
+		<!-- 表示联系人所属客户
+			name:写实体类中Customer对象名称
+			class:Customer全路径
+			column:列名称，与customer.hbm.xml中外键列名称一致
+		 -->
+		<many-to-one name="customer" class="zzd.entity.Customer" column="clid"></many-to-one>
+		
+	</class>
+	
+</hibernate-mapping>

@@ -11,6 +11,14 @@
 		<property name="username" column="username"></property>
 		<property name="password" column="password"></property>
 		<property name="address" column="address"></property>
+		
+		<!-- table:多对多第三张表名字 -->
+		<set name="roles" table="user_role" cascade="save-update">
+			<!-- 表示当前映射文件在第三张表的外键名称 -->
+			<key column="userid"></key>
+			<!-- class:角色表中实体类全路径，column:角色在第三张表中外键名称 -->
+			<many-to-many class="zzd.entity.Role" column="roleid"></many-to-many>
+		</set>
 	</class>
 	
 </hibernate-mapping>

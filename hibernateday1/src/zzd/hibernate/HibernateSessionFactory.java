@@ -1,5 +1,6 @@
 package zzd.hibernate;
 
+import org.eclipse.jdt.internal.compiler.batch.Main;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -115,6 +116,10 @@ public class HibernateSessionFactory {
      */
 	public static Configuration getConfiguration() {
 		return configuration;
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 
 }
