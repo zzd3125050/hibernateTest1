@@ -1,8 +1,5 @@
 package zzd.demo;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
