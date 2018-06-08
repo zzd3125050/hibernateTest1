@@ -18,7 +18,7 @@
 			cascade属性值表示级联保存、更新，可添加delete属性表示级联删除在后边加",delete"
 			inverse属性表示是否放弃关系维护，一对多中一般放弃“一”的关系维护，即外键维护
 		-->
-		<set name="setLinkMan" cascade="save-update,delete" inverse="true">
+		<set name="setLinkMan" cascade="save-update" inverse="true" batch-size="10">
 			<!-- 一对多建表，有外键 -->
 			<key column="clid"></key>
 			<!-- 客户所有的联系人，class里面写联系人实体类全路径 -->

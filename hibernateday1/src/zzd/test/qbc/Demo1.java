@@ -1,29 +1,51 @@
-package zzd.test.hql;
+package zzd.test.qbc;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 
 import zzd.entity.Customer;
-import zzd.entity.User;
 import zzd.hibernate.HibernateSessionFactory;
 
 /**
- * 对HQL进行学习测试
+ * 测试qbc语句的实现
+ * 使用qbc时，要操作实体类和属性
+ * 
+ * QBC语句：
+ * Restrictions.eq  等于 =
+ * .allEq   使用Map，使用key/value进行多个等于的判断
+ * .gt   大于>
+ * .ge   大于等于>=
+ * .lt   小于<
+ * .le   小于等于<=
+ * .between   对应sql的between子句
+ * .like   对应sql的like子句
+ * .in   对应SQL的in子句
+ * .and   and关系
+ * .or   or关系
+ * .SQLRestriction Sql限定查询
+ * .asc  根据传入的字段进行升序排序
+ * .desc  根据传入的字段进行降序排序
+ * 
  * @author zzd
- * 2018年6月7日
+ *
+ * 2018年6月8日
+ *
  */
 public class Demo1 {
 	/**
-	 * 使用hql查询所有对象
-	 * 
-	 * 2018年6月7日
+	 * QBC查询所有测试
+	 * 2018年6月8日
 	 */
 	@Test
 	public void fun1(){
@@ -35,44 +57,8 @@ public class Demo1 {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Query query = session.createQuery("from Customer");//使用"from 实体类"的名称即可
-			
-			List<Customer> customers = query.list();
-			
-			for (Customer customer : customers) {
-				System.out.println(customer);
-			}
-			
-			tx.commit();
-		}catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		}finally{
-//			session.close();
-			sessionFactory.close();
-		}
-	}
-	
-	/**
-	 * 使用hql条件查询
-	 * 语句写法：from 实体类名称 where 实体类属性名称=? and 实体类属性名称=?...
-	 * 			模糊查询：from 实体类名称 where 实体类属性名称="%xxx%"...
-	 * 
-	 * 2018年6月7日
-	 */
-	@Test
-	public void fun2(){
-		SessionFactory sessionFactory = null;
-		Session session = null;
-		Transaction tx = null;
-		try{
-			sessionFactory = HibernateSessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
-			tx = session.beginTransaction();
-			
-			Query query = session.createQuery("from Customer where cid=?");
-			query.setParameter(0, 2);
-			List<Customer> list = query.list();
+			Criteria criteria = session.createCriteria(Customer.class);
+			List<Customer> list = criteria.list();
 			for (Customer customer : list) {
 				System.out.println(customer);
 			}
@@ -88,7 +74,39 @@ public class Demo1 {
 	}
 	
 	/**
-	 * 使用order by 进行排序查询
+	 * QBC条件查询
+	 * 2018年6月8日
+	 */
+	@Test
+	public void fun2(){
+		SessionFactory sessionFactory = null;
+		Session session = null;
+		Transaction tx = null;
+		try{
+			sessionFactory = HibernateSessionFactory.getSessionFactory();
+			session = sessionFactory.getCurrentSession();
+			tx = session.beginTransaction();
+			
+			Criteria criteria = session.createCriteria(Customer.class);
+			criteria.add(Restrictions.eq("cid", 1));
+			
+			List<Customer> list = criteria.list();
+			for (Customer customer : list) {
+				System.out.println(customer);
+			}
+			
+			tx.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			tx.rollback();
+		}finally{
+//			session.close();
+			sessionFactory.close();
+		}
+	}
+	
+	/**
+	 * 排序查询
 	 * 2018年6月8日
 	 */
 	@Test
@@ -101,8 +119,10 @@ public class Demo1 {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Query query = session.createQuery("from Customer order by cid asc"/*desc倒序*/);
-			List<Customer> list = query.list();
+			Criteria criteria = session.createCriteria(Customer.class);
+			criteria.addOrder(Order.asc("cName"));
+			
+			List<Customer> list = criteria.list();
 			for (Customer customer : list) {
 				System.out.println(customer);
 			}
@@ -118,7 +138,7 @@ public class Demo1 {
 	}
 	
 	/**
-	 * 分页查询
+	 * 设置分页查询
 	 * 2018年6月8日
 	 */
 	@Test
@@ -131,16 +151,14 @@ public class Demo1 {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Query query = session.createQuery("from Customer");
-			//设置分页查询开始位置
-			query.setFirstResult(3);
-			//设置每页记录数
-			query.setMaxResults(3);
-			List<Customer> list = query.list();
+			Criteria criteria = session.createCriteria(Customer.class);
+			criteria.setFirstResult(0);
+			criteria.setMaxResults(4);
+			
+			List<Customer> list = criteria.list();
 			for (Customer customer : list) {
 				System.out.println(customer);
 			}
-			
 			
 			tx.commit();
 		}catch (Exception e) {
@@ -153,7 +171,7 @@ public class Demo1 {
 	}
 	
 	/**
-	 * 投影查询
+	 * 统计查询
 	 * 2018年6月8日
 	 */
 	@Test
@@ -166,12 +184,15 @@ public class Demo1 {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Query query = session.createQuery("select cName from Customer");
+			Criteria criteria = session.createCriteria(Customer.class);
+			criteria.setProjection(Projections.rowCount());
+			Object obj = criteria.uniqueResult();
+			System.out.println(obj);
 			
-			List<Object> list = query.list();
-			for (Object object : list) {
-				System.out.println(object);
-			}
+//			List<Customer> list = criteria.list();
+//			for (Customer customer : list) {
+//				System.out.println(customer);
+//			}
 			
 			tx.commit();
 		}catch (Exception e) {
@@ -184,7 +205,7 @@ public class Demo1 {
 	}
 	
 	/**
-	 * hql聚集函数的使用
+	 * 离线查询
 	 * 2018年6月8日
 	 */
 	@Test
@@ -197,13 +218,13 @@ public class Demo1 {
 			session = sessionFactory.getCurrentSession();
 			tx = session.beginTransaction();
 			
-			Query query = session.createQuery("select count(*) from Customer");
-			Object object = query.uniqueResult();
-			
-			Long obj = (Long) object;//首先要转成Long类型
-			int count = obj.intValue();//然后再转换成int类型
-			
-			System.out.println(count);
+//			Criteria criteria = session.createCriteria(Customer.class);
+			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Customer.class);
+			Criteria criteria = detachedCriteria.getExecutableCriteria(session);
+			List<Customer> list = criteria.list();
+			for (Customer customer : list) {
+				System.out.println(customer);
+			}
 			
 			tx.commit();
 		}catch (Exception e) {
