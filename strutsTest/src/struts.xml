@@ -7,4 +7,29 @@
 			<result name="add">/index.jsp</result>
 		</action>
 	</package>
+	
+	<package name="method" extends="struts-default" namespace="/">
+		<global-results>
+			<result name="success">index.jsp</result>
+		</global-results>
+	
+		<action name="method_*" class="zzd.action.MethodAction" method="{1}">
+<!-- 			<result name="success">index.jsp</result> -->
+		</action>
+	</package>
+	
+	<package name="customer" extends="struts-default" namespace="/">
+		<action name="customer_*" class="zzd.action.CustomerAction" method="{1}">
+			<result name="allCustomers">/jsp/customer/list.jsp</result>
+			<result name="toAddPage">/jsp/customer/add.jsp</result>
+			<result name="addSuccess" type="redirectAction">customer_findAll.action</result>
+		</action>
+		<action name="cust" class="zzd.test.action.CustomerTest"></action>
+	</package>
+	
+	<package name="formTest" extends="struts-default" namespace="/">
+		<action name="form1_*" class="zzd.test.action.Form1Action" method="{1}"></action>
+		<action name="form2" class="zzd.test.action.Form2Action"></action>
+		<action name="form3" class="zzd.test.action.Form3Action"></action>
+	</package>
 </struts>    
