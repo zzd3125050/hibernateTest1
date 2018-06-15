@@ -2,58 +2,51 @@ package zzd.entity;
 
 public class Cust {
 	private Integer cid;
-	private String name;
-	private String level;
-	private String source;
-	private String phone;
-	private String mobile;
-	private String cC;
-
-	public String getcC() {
-		return cC;
-	}
-	public void setcC(String cC) {
-		this.cC = cC;
-	}
-	@Override
-	public String toString() {
-		return "Cust [cid=" + cid + ", name=" + name + ", level=" + level + ", source=" + source + ", phone=" + phone
-				+ ", mobile=" + mobile + ", cC=" + cC + "]";
-	}
+	private String custName;
+	private String custLevel;
+	private String custSource;
+	private String custPhone;
+	private String custMobile;
 	public Integer getCid() {
 		return cid;
 	}
 	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
-	public String getName() {
-		return name;
+	public String getCustName() {
+		return custName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCustName(String custName) {
+		this.custName = custName;
 	}
-	public String getLevel() {
-		return level;
+	public String getCustLevel() {
+		return custLevel;
 	}
-	public void setLevel(String level) {
-		this.level = level;
+	public void setCustLevel(String custLevel) {
+		this.custLevel = custLevel;
 	}
-	public String getSource() {
-		return source;
+	public String getCustSource() {
+		return custSource;
 	}
-	public void setSource(String source) {
-		this.source = source;
+	public void setCustSource(String custSource) {
+		this.custSource = custSource;
 	}
-	public String getPhone() {
-		return phone;
+	public String getCustPhone() {
+		return custPhone;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setCustPhone(String custPhone) {
+		this.custPhone = custPhone;
 	}
-	public String getMobile() {
-		return mobile;
+	public String getCustMobile() {
+		return custMobile;
 	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}	
+	public void setCustMobile(String custMobile) {
+		this.custMobile = custMobile;
+	}
+	@Override
+	public String toString() {
+		return "Cust [cid=" + cid + ", custName=" + custName + ", custLevel=" + custLevel + ", custSource=" + custSource
+				+ ", custPhone=" + custPhone + ", custMobile=" + custMobile + "]";
+	}
+
 }

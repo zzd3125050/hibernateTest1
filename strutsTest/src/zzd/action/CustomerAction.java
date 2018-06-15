@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import zzd.commons.CommonUtils;
 import zzd.entity.Customer;
+import zzd.entity.User;
 import zzd.service.CustomerService;
 
 public class CustomerAction extends ActionSupport implements ModelDriven<Customer> {
@@ -32,6 +33,17 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 
 	public String toAddPage(){
 		return "toAddPage";
+	}
+	
+	public String login(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+		User user = CommonUtils.toBean(request.getParameterMap(), User.class);
+		if(customerService.checkUser(user)){
+			request.getSession().setAttribute("username", user.getUsername());
+			return "loginSuccess";
+		}else{
+			return "login";
+		}
 	}
 	
 	public String addCustomer(){

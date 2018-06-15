@@ -132,7 +132,7 @@ A.active {
 											<TBODY>
 <TR>
 	<TD class=menuSmall><A class=style2 href='<c:url value="/customer_toAddPage"/>' 
-		target=main>－ 新增客户</A></TD>
+		target="main">－ 新增客户</A></TD>
 </TR>
 <TR> 
 	<TD class=menuSmall>

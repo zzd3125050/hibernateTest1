@@ -19,10 +19,29 @@
 	</package>
 	
 	<package name="customer" extends="struts-default" namespace="/">
+	<!-- 1、首先声明拦截器 -->
+		<interceptors>
+			<interceptor name="loginintercept" class="zzd.interceptor.LoginInterceptor"></interceptor>
+		</interceptors>
+		
 		<action name="customer_*" class="zzd.action.CustomerAction" method="{1}">
+		<!-- 2、到action中配置使用拦截器 -->
+			<interceptor-ref name="loginintercept">
+			<!-- 配置在action中不拦截的方法
+				name值：excludeMethods
+				值：不拦截的方法名，有多发方法用逗号隔开  login,toAddPage.....
+			 -->
+				<param name="excludeMethods">login</param>
+			</interceptor-ref>
+			
+		<!-- 3、将struts默认拦截器重新配置一遍 -->
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			
 			<result name="allCustomers">/jsp/customer/list.jsp</result>
 			<result name="toAddPage">/jsp/customer/add.jsp</result>
 			<result name="addSuccess" type="redirectAction">customer_findAll.action</result>
+			<result name="loginSuccess">/index.htm</result>
+			<result name="login" type="redirect">/login.jsp</result>
 		</action>
 		<action name="cust" class="zzd.test.action.CustomerTest"></action>
 	</package>
@@ -31,5 +50,11 @@
 		<action name="form1_*" class="zzd.test.action.Form1Action" method="{1}"></action>
 		<action name="form2" class="zzd.test.action.Form2Action"></action>
 		<action name="form3" class="zzd.test.action.Form3Action"></action>
+	</package>
+	
+	<package name="ognl" extends="struts-default" namespace="/">
+		<action name="ognl1" class="zzd.ognl.action.DemoAction1">
+			<result name="success">/ognl/ognl1.jsp</result>
+		</action>
 	</package>
 </struts>    

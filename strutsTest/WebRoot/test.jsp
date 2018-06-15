@@ -13,12 +13,11 @@
 
 	<body>
 		<form action='<c:url value="/cust" />' method="post">
-			name<input type="text" name="name"/><br/>
-			level<input type="text" name="level"/><br/>
-			source<input type="text" name="source"/><br/>
-			phone<input type="text" name="phone"/><br/>
-			mobile<input type="text" name="mobile"/><br/>
-			cCcc<input type="text" name="cC"/><br/>
+			name<input type="text" name="custName"/><br/>
+			level<input type="text" name="custLevel"/><br/>
+			source<input type="text" name="custSource"/><br/>
+			phone<input type="text" name="custPhone"/><br/>
+			mobile<input type="text" name="custMobile"/><br/>
 			<input type="submit" value="提交" />
 		</form>
 	</body>
